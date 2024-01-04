@@ -1,36 +1,38 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-<section class="billing-section">
-    <form id="billingForm" method="post" action="{{url_for('billing')}}">
-        <label for="productSelect"> Select Product:</label>
-        <select id="productSelect" name="productSelect">
-            {% for item in inventory %}
-                <option value="{{ item.product_rate }}">{{ item.product_name }}</option>
-            {% endfor %}
-        </select>
+    <section class="billing-section">
+<form id="billingForm" method="post" action="{{url_for('billing')}}">
+    <label for="productSelect"> Select Product:</label>
+    <select id="productSelect" name="productSelect">
+        {% for item in inventory %}
+            <option value="{{ item.product_rate }}">{{ item.product_name }}</option>
+        {% endfor %}
+    </select>
 
-        <label for="quantityInput">Quantity:</label>
-        <input type="number" id="quantityInput" name="quantityInput" value="1" min="1" />
+    <label for="quantityInput">Quantity:</label>
+    <input type="number" id="quantityInput" name="quantityInput" value="1" min="1" />
 
-        <button class="button" type="button" onclick="addProduct()">Add Product</button>
-        <h2>Selected Products:</h2>
-        <div id="selectedProductsContainer"></div>
-        <h3 id="totalAmount">Total Amount:₹0</h3>
+    <button class="button" type="button" onclick="addProduct()">Add Product</button>
+    <h2>Selected Products:</h2>
+<label>
+    <textarea id="selectedProducts" name="selectedProducts" readonly></textarea>
+</label>
+    <h3 id="totalAmount">Total Amount:₹0</h3>
 
-        <label>Payment Method:</label>
-        <label for="onlinePayment"><input type="radio" name="paymentMethod" value="online" id="onlinePayment" required>Online</label>
-        <label for="offlinePayment"><input type="radio" name="paymentMethod" value="offline" id="offlinePayment" required>Offline</label>
-        <button type="button" onclick="calculateTotal()">Calculate Total</button>
+    <label>Payment Method:</label>
+    <label for="onlinePayment"><input type="radio" name="paymentMethod" value="online" id="onlinePayment" required>Online</label>
+    <label for="offlinePayment"><input type="radio" name="paymentMethod" value="offline" id="offlinePayment" required>Offline</label>
+    <button type="button" onclick="calculateTotal()">Calculate Total</button>
         {{ form.hidden_tag() }}  <!-- Include the CSRF token -->
         <div>
             {{ form.submit(class="blue-button") }}  <!-- Apply the blue-button class to the submit button -->
         </div>
-    </form>
-</section>
 
+</form>
+    </section>
 <div>
-    {% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul class="flash-messages">
                 {% for message in messages %}
@@ -40,14 +42,13 @@
         {% endif %}
     {% endwith %}
 </div>
-
-<script>
+    <script>
     let selectedProducts = [];
 
     function addProduct() {
         const productSelect = document.getElementById('productSelect');
         const quantityInput = document.getElementById('quantityInput');
-        const selectedProductsContainer = document.getElementById('selectedProductsContainer');
+        const selectedProductsTextarea = document.getElementById('selectedProducts');
 
         const productId = productSelect.value;
         const productName = productSelect.options[productSelect.selectedIndex].text;
@@ -56,9 +57,8 @@
         if (productId !== '0' && quantity > 0) {
             const totalPrice = parseInt(productId) * quantity;
 
-            const listItem = document.createElement('div');
-            listItem.innerHTML = `${productName} x ${quantity} - ₹${totalPrice} <button onclick="removeProduct(this)">Remove</button>`;
-            selectedProductsContainer.appendChild(listItem);
+            const listItem = `${productName} x ${quantity} - ₹${totalPrice}\n`;
+            selectedProductsTextarea.value += listItem;
 
             selectedProducts.push(totalPrice);
 
@@ -70,19 +70,10 @@
         }
     }
 
-    function removeProduct(button) {
-        const listItem = button.parentNode;
-        const index = Array.from(listItem.parentNode.children).indexOf(listItem);
-        selectedProducts.splice(index, 1);
-        listItem.remove();
-        calculateTotal();
-    }
-
     function calculateTotal() {
         const totalAmountElement = document.getElementById('totalAmount');
         const totalAmount = selectedProducts.reduce((acc, val) => acc + val, 0);
         totalAmountElement.textContent = `₹${totalAmount}`;
     }
 </script>
-
 {% endblock %}

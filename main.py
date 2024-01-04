@@ -1,6 +1,8 @@
+from datetime import timedelta
 from sqlalchemy import func
 from running import *
 import soldtableclean
+import xlsxwriter
 
 app.app_context().push()
 
@@ -53,12 +55,10 @@ class Menu(db.Model):
         self.product_rate = product_rate
 
 
-
-# app.py
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -72,7 +72,7 @@ def login():
 
         if user:
             login_user(user)
-            return redirect(    url_for('index'))
+            return redirect(url_for('index'))
         else:
             return 'Invalid credentials'
 
@@ -84,6 +84,7 @@ def login():
 def logout():
     logout_user()
     return 'Logged out successfully'
+
 
 @app.route('/main')
 @login_required
@@ -108,7 +109,6 @@ def add_stock():
 
         for record in inventory:
             if record.product_name == product_name and record.date == date:
-                # Update existing record
                 record.product_price += product_price
                 record.total_price += total_price
                 record.date = date
@@ -165,19 +165,21 @@ def billing():
         return redirect(url_for('index'))
 
 
-# ===========================================================================================================
 @app.route('/admin')
 @login_required
 def admin():
+    today = datetime.date.today()
+    previous_two_days = [today - timedelta(days=i) for i in range(2, -1, -1)]
+    formatted_dates = [date.strftime('%Y-%m-%d') for date in previous_two_days]
     chart_data = {
-        'today_revenue': SoldItem.query.filter_by(date=datetime.date.today()).with_entities(
+        'today_revenue': SoldItem.query.filter_by(date=today).with_entities(
             func.sum(SoldItem.total_price)).scalar() or 0,
 
-        'labels': ['31/12/2023', '01/01/2024', '02/02/2024'],
+        'labels': formatted_dates,
         'data': [
-            SoldItem.query.filter_by(date='2023-12-31').with_entities(func.sum(SoldItem.total_price)).scalar() or 0,
-            SoldItem.query.filter_by(date='2024-01-01').with_entities(func.sum(SoldItem.total_price)).scalar() or 0,
-            SoldItem.query.filter_by(date='2024-01-02').with_entities(func.sum(SoldItem.total_price)).scalar() or 0],
+            SoldItem.query.filter_by(date=date).with_entities(func.sum(SoldItem.total_price)).scalar() or 0
+            for date in formatted_dates
+        ],
     }
     pie_data = {
         'labels': ['Category A', 'Category B', 'Category C', 'Category D', 'Category E'],
@@ -185,6 +187,16 @@ def admin():
     }
 
     return render_template('admin.html', chart_data=chart_data, pie_data=pie_data)
+
+
+@app.route('/delete_item/<int:id>', methods=['POST'])
+@login_required
+def delete_item(id):
+    item_to_delete = Menu.query.get_or_404(id)
+    db.session.delete(item_to_delete)
+    db.session.commit()
+    flash('Product deleted successfully!', 'success')
+    return redirect(url_for('update_menu'))
 
 
 @app.route('/update_menu', methods=['POST', 'GET'])
@@ -214,6 +226,38 @@ def view_inventory():
     return render_template('view_inventory.html', inventory=inventory)
 
 
+@app.route('/download_menu_excel', methods=['GET'])
+@login_required
+def download_menu_excel():
+    start_date_param = request.args.get('start_date')
+    end_date_param = request.args.get('end_date')
+
+    if not (start_date_param and end_date_param):
+        return "Both start_date and end_date parameters are required.", 400
+
+    sales = SoldItem.query.filter(SoldItem.date.between(start_date_param, end_date_param)).all()
+
+    excel_file_path = f'sales' + str(datetime.date.today()) + '.xlsx'
+    workbook = xlsxwriter.Workbook(excel_file_path)
+    worksheet = workbook.add_worksheet()
+
+    headers = ['ID', 'Product Name', 'Total Price', 'Quantity', 'Date']
+    for col_num, header in enumerate(headers):
+        worksheet.write(0, col_num, header)
+
+    for row_num, item in enumerate(sales, start=1):
+        worksheet.write(row_num, 0, item.id)
+        worksheet.write(row_num, 1, item.product_name)
+        worksheet.write(row_num, 2, item.quantity)
+        worksheet.write(row_num, 3, item.total_price)
+        worksheet.write(row_num, 4, item.method)
+        worksheet.write(row_num, 5, item.date)
+
+    workbook.close()
+
+    return send_file(excel_file_path, as_attachment=True)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8000)
     app.app_context().pop()
