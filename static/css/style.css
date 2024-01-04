@@ -1,0 +1,312 @@
+/* styles.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, rgb(203, 154, 74), rgb(255, 251, 0));
+}
+
+.navbar {
+    background-color: #d3ab76;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.brand img {
+    width: 40px; /* Set the width of your logo */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Add some space between logo and brand name */
+}
+
+.brand span {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+}
+
+.nav-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    background-color: #2980b9;
+}
+
+h1 {
+    color: white;   
+    text-align: center;
+    font-family: 'Times New Roman', serif;
+    margin-bottom: 80px;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* Button Styles */
+button {
+    width: 150px;
+    height: 40px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+
+}
+
+.primary-button {
+    background-color: #3498db;
+    color: white;
+}
+.billing-section {
+    background-color: lightcoral;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 35%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+select, input[type="integer"], textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: palegoldenrod;
+}
+
+button {
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style radio buttons */
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Adjust styles for submit button */
+button[type="submit"] {
+    background-color: #27ae60;
+}.content-container {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    margin-top: 20px;
+}
+
+.menu-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 48%; /* Adjust the width as needed, leaving some space between the sections */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: yellowgreen;
+    color: beige;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Optional: Add styling for even and odd rows */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.form-section {
+    background-color:   #d3c88a ;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 48%; /* Adjust the width as needed, leaving some space between the sections */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"],
+textarea,
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Adjust styles for buttons in the form section */
+.form-section button {
+    background-color: #27ae60;
+    color: white;
+}
+
+.form-section button[type="submit"] {
+    background-color: #3498db;
+}
+
+.inventory-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 80%;
+    overflow-x: auto; /* Enable horizontal scrolling for small screens */
+}
+
+.login-container {
+    max-width: 500px;
+    margin: 100px auto;
+    background-color: #d3c081;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+h2 {
+    color: #3498db;
+    text-align: center;
+}
+
+
+
+input {
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+    /* Style for the card */
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px;
+      width: 300px;
+      position: relative;
+    }
+
+    /* Style for the dropdown button */
+    .dropdown-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Style for the dropdown content */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    /* Style for dropdown links */
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* Change color on hover */
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+

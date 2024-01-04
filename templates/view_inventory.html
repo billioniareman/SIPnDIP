@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+    <section class="inventory-section">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in inventory %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.product_price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total_price }}</td>
+                <td>{{ item.date.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        </section>
+    <a href="{{ url_for('add_stock') }}"><button>Add Stock items</button></a>
+
+{% endblock %}

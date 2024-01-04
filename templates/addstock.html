@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+        <h1>Add Stock</h1>
+   <div class="content-container">
+        <section class="inventory-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in inventory %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.product_name }}</td>
+                            <td>{{ item.product_price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.total_price }}</td>
+                            <td>{{ item.date.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="form-section">
+            <form method="POST" id="menu-form">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        {{ form.product_name.label }}
+                        {{ form.product_name }}
+                    </div>
+                    <div>
+                        {{ form.product_price.label }}
+                        {{ form.product_price }}
+                    </div>
+                    <div>
+                        {{ form.quantity.label }}
+                        {{ form.quantity }}
+                    </div>
+                <div>
+                    {{ form.total_price.label }}
+                    {{ form.total_price }}
+                </div>
+                <div>{{ form.date.label }}
+                {{ form.date }}</div>
+
+                <div>
+                    <a href="{{ url_for('add_stock') }}"><button type="submit">Submit</button></a>
+                </div>
+            </form>
+        </section>
+   </div>
+    <script>
+        function calculateTotalPrice() {
+            const productPrice = parseFloat(document.getElementById('product_price').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const total = productPrice * quantity;
+            document.getElementById('total_price').value = total.toFixed(2);
+        }
+
+        // Attach the calculateTotalPrice function to input field change events
+        document.getElementById('product_price').addEventListener('change', calculateTotalPrice);
+        document.getElementById('quantity').addEventListener('change', calculateTotalPrice);
+    </script>
+
+
+{% endblock %}

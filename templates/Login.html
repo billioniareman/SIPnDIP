@@ -1,0 +1,21 @@
+<!-- templates/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <h2>Login</h2>
+            {{ form.username.label }} {{ form.username }}
+            {{ form.password.label }} {{ form.password }}
+            {{ form.submit(style="color: white; background-color: #4CAF50; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 5px;") }}
+        </form>
+    </div>
+</body>
+</html>

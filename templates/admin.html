@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+        <!-- Include Chart.js from CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+<h2>Today's Revenue</h2>
+<h4>{{ chart_data['today_revenue'] }}</h4>
+
+<div>
+    <canvas id="barChart" width=80%></canvas>
+</div>
+<div>
+<canvas id="myPieChart" width="400" height="200"></canvas>
+</div>
+    <script>
+        var ctx = document.getElementById('myPieChart').getContext('2d');
+        const myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: {{ pie_data.labels | tojson | safe }},
+                datasets: [{
+                    data: {{ pie_data.data | tojson | safe }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+        // Chart.js configuration
+    var ctx = document.getElementById('barChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ chart_data.labels | tojson | safe }},
+                datasets: [{
+                    label: 'Sample Data',
+                    data: {{ chart_data.data | tojson | safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

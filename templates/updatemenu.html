@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+   <div class="content-container">
+        <section class="menu-section">
+            <table>
+                <thead>
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in menu %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.product_rate }}</td>
+            </tr>
+        {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+
+        <section class="form-section">
+    <form method="POST" id="menu-form">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.Item.label }}
+            {{ form.Item }}
+        </div>
+        <div>
+            {{ form.Price.label }}
+            {{ form.Price }}
+        </div>
+        <div>
+       {{ form.submit(style="color: white; background-color: #4CAF50; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 5px;") }}
+        </div>
+    </form>
+         </section>
+
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class="flash-messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+{% endblock %}
