@@ -8,11 +8,16 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to right, rgb(203, 154, 74), rgb(255, 251, 0));
+    /*background: linear-gradient(to right, rgb(203, 154, 74), rgb(255, 251, 0));*/
+    background-color: rgba(0, 0, 0, 0.3);
+    background-image: url('/static/img/sipndip.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .navbar {
-    background-color: #d3ab76;
+    background-color: #cccccc;
     padding: 5px;
     display: flex;
     justify-content: space-between;
@@ -39,7 +44,7 @@ a {
 }
 
 .brand span {
-    color: white;
+    color: black;
     font-size: 18px;
     font-weight: bold;
 }
@@ -51,7 +56,7 @@ a {
 .nav-button {
     background-color: transparent;
     border: none;
-    color: white;
+    color: black;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -61,14 +66,15 @@ a {
 }
 
 .nav-button:hover {
-    background-color: #2980b9;
+    background-color: white;
 }
 
 h1 {
-    color: white;   
+    color: black;
     text-align: center;
-    font-family: 'Times New Roman', serif;
+    font-family: 'Times  Roman', serif;
     margin-bottom: 80px;
+    font-size: 100px;
 }
 
 .button-container {
@@ -94,7 +100,7 @@ button {
     color: white;
 }
 .billing-section {
-    background-color: lightcoral;
+    background-color: rgba(240, 128, 128, 0.55);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -105,7 +111,7 @@ button {
 form {
     display: flex;
     flex-direction: column;
-
+    margin-top: 30px;
     gap: 10px;
 }
 
@@ -183,10 +189,10 @@ tr:nth-child(odd) {
 }
 
 .form-section {
-    background-color:   #d3c88a ;
+    background-color: #d3c88a;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     width: 48%; /* Adjust the width as needed, leaving some space between the sections */
 }
 
@@ -234,7 +240,7 @@ button {
 .login-container {
     max-width: 500px;
     margin: 100px auto;
-    background-color: #d3c081;
+    background-color: rgba(211, 192, 129, 0.5);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

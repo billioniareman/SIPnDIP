@@ -5,7 +5,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+
+                        <th>Product Category</th>
                         <th>Product Name</th>
                         <th>Product Price</th>
                     </tr>
@@ -13,10 +14,12 @@
             <tbody>
                 {% for item in menu %}
                    <tr>
-                        <td>{{ item.id }}</td>
+
+                        <td>{{ item.product_category }}</td>
                         <td>{{ item.product_name }}</td>
                         <td>{{ item.product_rate }}</td>
-                        <td>
+
+                       <td>
                             <form method="POST" action="{{ url_for('delete_item', id=item.id) }}">
                                 {{ form.hidden_tag() }}
                                 <input type="hidden" name="_method" value="DELETE">
@@ -32,9 +35,14 @@
             <form method="POST" id="menu-form">
                 {{ form.hidden_tag() }}
                 <div>
+                    {{ form.Category.label }}
+                    {{ form.Category }}
+                </div>
+                <div>
                     {{ form.Item.label }}
                     {{ form.Item }}
                 </div>
+
                 <div>
                     {{ form.Price.label }}
                     {{ form.Price }}
@@ -49,7 +57,7 @@
     {% if messages %}
         <ul class="flash-messages">
             {% for message in messages %}
-                <li>{{ message }}</li>
+                <alert>{{ message }}</alert>
             {% endfor %}
         </ul>
     {% endif %}

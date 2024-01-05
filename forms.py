@@ -23,5 +23,6 @@ class BillForm(FlaskForm):
 
 class UpdateMenu(FlaskForm):
     Item = StringField('Item Name', validators=[DataRequired()])
+    Category = StringField('Category', validators=[DataRequired()])
     Price = FloatField('Price', validators=[DataRequired(), NumberRange()])
     submit = SubmitField('Submit')

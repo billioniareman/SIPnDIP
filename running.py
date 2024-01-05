@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, flash, url_for, request
+from flask import Flask, render_template, redirect, flash, url_for, request, jsonify
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from forms import InventoryItemForm, LoginForm, UpdateMenu, BillForm

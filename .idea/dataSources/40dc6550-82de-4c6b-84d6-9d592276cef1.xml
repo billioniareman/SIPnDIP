@@ -446,7 +446,7 @@
     <routine id="176" parent="1" name="fts5"/>
     <schema id="177" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-01-04.14:06:51</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-01-05.10:42:17</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="178" parent="16">
       <ArgumentDirection>R</ArgumentDirection>

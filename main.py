@@ -47,10 +47,12 @@ class SoldItem(db.Model):
 
 class Menu(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    product_category = db.Column(db.String(100))
     product_name = db.Column(db.String(100))
     product_rate = db.Column(db.Integer)
 
-    def __init__(self, product_name, product_rate):
+    def __init__(self, product_category, product_name, product_rate):
+        self.product_category = product_category
         self.product_name = product_name
         self.product_rate = product_rate
 
@@ -136,6 +138,8 @@ def add_stock():
 @login_required
 def billing():
     form = BillForm()
+    inventory = Menu.query.all()
+
     if request.method == 'POST' or request.method == 'GET':
         products_selected = request.form.get('selectedProducts')
         rst = soldtableclean.Soldtableclean(products_selected).str_to_list()
@@ -160,9 +164,24 @@ def billing():
             db.session.add(billing_item)
             db.session.commit()
 
-        return render_template('billing.html', inventory=Menu.query.all(), form=form)
+        return render_template('billing.html', inventory=inventory, form=form,
+                               categories=set(item.product_category for item in inventory))
     else:
         return redirect(url_for('index'))
+
+
+@app.route('/get_categories')
+def get_categories():
+    menu = Menu.query.all()
+    categories = set(list(set(item.product_category for item in menu)))
+    return jsonify(categories)
+
+
+@app.route('/get_products/<category>')
+def get_products(category):
+    menu = Menu.query.all()
+    products = [item.product_name for item in menu if item.product_category == category]
+    return jsonify(products)
 
 
 @app.route('/admin')
@@ -207,12 +226,14 @@ def update_menu():
     if form.validate_on_submit():
         name = form.Item.data
         price = form.Price.data
-        updateproduct = Menu.query.filter_by(product_name=name).first()
+        category = form.Category.data
+        name = name.replace(' ', '-')
+        updateproduct = Menu.query.filter_by(product_category=category, product_name=name).first()
         if updateproduct:
             updateproduct.product_rate = price
             flash('Product updated successfully!', 'success')
         else:
-            new_item = Menu(product_name=name, product_rate=price)
+            new_item = Menu(product_category=str.upper(category), product_name=str.lower(name), product_rate=price)
             db.session.add(new_item)
             flash(f'Product with name {name} is not updated', 'danger')
         db.session.commit()
@@ -259,5 +280,5 @@ def download_menu_excel():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True)
     app.app_context().pop()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="sipndip" uuid="40dc6550-82de-4c6b-84d6-9d592276cef1">
+    <data-source source="LOCAL" name="sipndip" uuid="199a2cc4-f2ef-4923-a40e-88a7c3312ff7">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
