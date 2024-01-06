@@ -4,7 +4,8 @@
     <section class="billing-section">
         <form id="billingForm" method="post" action="{{url_for('billing')}}">
             <label for="category">Select Category:</label>
-            <select id="category" name="category" onchange="updateProductOptions()">
+            <select id="category" name="category" onchange="updateProductOptions()" >
+            <option value="" selected disabled>Select an option</option>
                 {% for category in categories|sort %}
                     <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
@@ -12,6 +13,7 @@
             <br>
             <label for="product">Select Product:</label>
             <select id="product" name="product">
+            <option value="" selected disabled></option>
                 {% for item in inventory %}
                     <option value="{{ item.product_rate }}">{{ item.product_name }}</option>
                 {% endfor %}
@@ -58,7 +60,7 @@
             const productName = productSelect.options[productSelect.selectedIndex].text;
             const quantity = parseInt(quantityInput.value);
             if (productId !== '0' && quantity > 0) {
-                const totalPrice = parseInt(productId) * quantity;
+                const totalPrice = parseFloat(productId) * quantity;
                 const listItem = `${productName} x ${quantity} - ₹${totalPrice}\n`;
                 selectedProductsTextarea.value += listItem;
                 selectedProducts.push(totalPrice);
@@ -77,9 +79,9 @@
             fetch('/get_categories')
                 .then(response => response.json())
                 .then(categories => {
-                    var categorySelect = document.getElementById('category');
+                    const categorySelect = document.getElementById('category');
                     categories.forEach(category => {
-                        var option = document.createElement('option');
+                        const option = document.createElement('option');
                         option.value = category;
                         option.text = category;
                         categorySelect.add(option);
@@ -88,15 +90,15 @@
                 });
         });
         function updateProductOptions() {
-            var categorySelect = document.getElementById('category');
-            var productSelect = document.getElementById('product');
+            const categorySelect = document.getElementById('category');
+            const productSelect = document.getElementById('product');
             productSelect.innerHTML = '';
-            var selectedCategory = categorySelect.value;
+            const selectedCategory = categorySelect.value;
             fetch(`/get_products/${selectedCategory}`)
                 .then(response => response.json())
                 .then(products => {
                     products.forEach(product => {
-                        var option = document.createElement('option');
+                        const option = document.createElement('option');
                         option.value = product;
                         option.text = product;
                         productSelect.add(option);

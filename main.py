@@ -48,7 +48,7 @@ class SoldItem(db.Model):
 class Menu(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_category = db.Column(db.String(100))
-    product_name = db.Column(db.String(100))
+    product_name = db.Column(db.String(100),unique=True)
     product_rate = db.Column(db.Integer)
 
     def __init__(self, product_category, product_name, product_rate):
@@ -224,18 +224,16 @@ def update_menu():
     form = UpdateMenu()
     menu = Menu.query.all()
     if form.validate_on_submit():
-        name = form.Item.data
+        name = str.lower(form.Item.data)
         price = form.Price.data
-        category = form.Category.data
+        category = str.upper(form.Category.data)
         name = name.replace(' ', '-')
         updateproduct = Menu.query.filter_by(product_category=category, product_name=name).first()
         if updateproduct:
             updateproduct.product_rate = price
-            flash('Product updated successfully!', 'success')
         else:
             new_item = Menu(product_category=str.upper(category), product_name=str.lower(name), product_rate=price)
             db.session.add(new_item)
-            flash(f'Product with name {name} is not updated', 'danger')
         db.session.commit()
     return render_template('updatemenu.html', menu=menu, form=form)
 
@@ -262,7 +260,7 @@ def download_menu_excel():
     workbook = xlsxwriter.Workbook(excel_file_path)
     worksheet = workbook.add_worksheet()
 
-    headers = ['ID', 'Product Name', 'Total Price', 'Quantity', 'Date']
+    headers = ['ID', 'Product Name', 'Total Price', 'Quantity', 'Payment Mode']
     for col_num, header in enumerate(headers):
         worksheet.write(0, col_num, header)
 
@@ -272,7 +270,7 @@ def download_menu_excel():
         worksheet.write(row_num, 2, item.quantity)
         worksheet.write(row_num, 3, item.total_price)
         worksheet.write(row_num, 4, item.method)
-        worksheet.write(row_num, 5, item.date)
+
 
     workbook.close()
 

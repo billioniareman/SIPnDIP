@@ -151,23 +151,25 @@ button[type="submit"] {
 }
 
 .menu-section {
-    background-color: white;
+    background-color: transparent;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 48%; /* Adjust the width as needed, leaving some space between the sections */
+    overflow: auto;
+    max-height: 500px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 th, td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid transparent;
 }
 
 th {
@@ -176,20 +178,20 @@ th {
 }
 
 tr:hover {
-    background-color: #f5f5f5;
+    background-color: transparent;
 }
 
 /* Optional: Add styling for even and odd rows */
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.75);
 }
 
 tr:nth-child(odd) {
-    background-color: #fff;
+    background-color:  rgba(255, 255, 255, 0.65);
 }
 
 .form-section {
-    background-color: #d3c88a;
+    background-color: transparent;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -197,6 +199,7 @@ tr:nth-child(odd) {
 }
 
 form {
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
