@@ -31,13 +31,15 @@ class InventoryItem(db.Model):
 
 class SoldItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    category_id = db.Column(db.String(50))
     product_name = db.Column(db.String(100))
     quantity = db.Column(db.String(100))
     total_price = db.Column(db.Float)
     method = db.Column(db.String(100))
     date = db.Column(db.Date)
 
-    def __init__(self, product_name, quantity, total_price, date, method):
+    def __init__(self,category, product_name, quantity, total_price, date, method):
+        self.category=category
         self.product_name = product_name
         self.quantity = quantity
         self.total_price = total_price
@@ -48,7 +50,7 @@ class SoldItem(db.Model):
 class Menu(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_category = db.Column(db.String(100))
-    product_name = db.Column(db.String(100),unique=True)
+    product_name = db.Column(db.String(100), unique=True)
     product_rate = db.Column(db.Integer)
 
     def __init__(self, product_category, product_name, product_rate):
@@ -59,7 +61,7 @@ class Menu(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -129,6 +131,7 @@ def add_stock():
             )
             db.session.add(new_item)
             db.session.commit()
+            flash('Stock added successfully!', 'success')  # Flash message added
 
         return redirect(url_for('add_stock'))
     return render_template('addstock.html', form=form, inventory=inventory)
@@ -140,13 +143,14 @@ def billing():
     form = BillForm()
     inventory = Menu.query.all()
 
-    if request.method == 'POST' or request.method == 'GET':
+    if request.method in ['POST', 'GET']:
+        category=request.form.get('category')
         products_selected = request.form.get('selectedProducts')
         rst = soldtableclean.Soldtableclean(products_selected).str_to_list()
         item = soldtableclean.Setdatabase(rst).list_of_item()
         quantity = soldtableclean.Setdatabase(rst).list_of_quantities()
 
-        date = datetime.datetime.today()
+        date = datetime.datetime.now()  # Use datetime.datetime.now() for the current timestamp
         method = request.form.get('paymentMethod')
 
         quantity_str = ','.join(str(q) for q in quantity) if all(quantity) else '0'
@@ -156,13 +160,27 @@ def billing():
             menu_item = Menu.query.filter_by(product_name=i).first()
             if menu_item:
                 total_price += menu_item.product_rate
-        if ' '.join(item) is None or ' '.join(item) == 'None':
+
+        # Print information to the console
+        print(f"Selected Items: {', '.join(item)}")
+        print(f"Quantities: {quantity_str}")
+        print(f"Total Price: {total_price}")
+        print(f"Payment Method: {method}")
+
+        if not item:
             flash('Add items to proceed')
         else:
-            billing_item = SoldItem(product_name=' '.join(item), quantity=quantity_str, total_price=total_price,
-                                    date=date, method=method)
+            billing_item = SoldItem(
+                category=category,
+                product_name=' '.join(item),
+                quantity=quantity_str,
+                total_price=total_price,
+                date=date,
+                method=method
+            )
             db.session.add(billing_item)
             db.session.commit()
+            flash('Order placed successfully!', 'success')  # Flash message added
 
         return render_template('billing.html', inventory=inventory, form=form,
                                categories=set(item.product_category for item in inventory))
@@ -173,7 +191,7 @@ def billing():
 @app.route('/get_categories')
 def get_categories():
     menu = Menu.query.all()
-    categories = set(list(set(item.product_category for item in menu)))
+    categories = set(list(item.product_category for item in menu))
     return jsonify(categories)
 
 
@@ -235,6 +253,8 @@ def update_menu():
             new_item = Menu(product_category=str.upper(category), product_name=str.lower(name), product_rate=price)
             db.session.add(new_item)
         db.session.commit()
+        flash('Menu updated successfully!', 'success')  # Flash message added
+
     return render_template('updatemenu.html', menu=menu, form=form)
 
 
@@ -270,7 +290,6 @@ def download_menu_excel():
         worksheet.write(row_num, 2, item.quantity)
         worksheet.write(row_num, 3, item.total_price)
         worksheet.write(row_num, 4, item.method)
-
 
     workbook.close()
 

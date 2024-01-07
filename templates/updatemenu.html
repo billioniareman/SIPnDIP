@@ -53,13 +53,5 @@
             </form>
         </section>
     </div>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul class="flash-messages">
-            {% for message in messages %}
-                <alert>{{ message }}</alert>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endwith %}
+
 {% endblock %}
