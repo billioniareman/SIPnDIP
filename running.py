@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, flash, url_for, request, jsonify
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from forms import InventoryItemForm, LoginForm, UpdateMenu, BillForm
+from forms import InventoryItemForm, LoginForm, UpdateMenu
 import datetime
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from flask import send_file

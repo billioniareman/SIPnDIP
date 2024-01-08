@@ -17,9 +17,6 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Log In')
 
 
-class BillForm(FlaskForm):
-    submit = SubmitField('Submit')
-
 
 class UpdateMenu(FlaskForm):
     Item = StringField('Item Name', validators=[DataRequired()])

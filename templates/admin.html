@@ -45,7 +45,7 @@
 
 <script>
     // Pie Chart
-    var pieCtx = document.getElementById('myPieChart').getContext('2d');
+    const pieCtx = document.getElementById('myPieChart').getContext('2d');
     const myPieChart = new Chart(pieCtx, {
         type: 'pie',
         data: {
@@ -69,7 +69,7 @@
     });
 
     // Bar Chart
-    var barCtx = document.getElementById('barChart').getContext('2d');
+    const barCtx = document.getElementById('barChart').getContext('2d');
     const myChart = new Chart(barCtx, {
         type: 'bar',
         data: {

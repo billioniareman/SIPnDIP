@@ -24,6 +24,7 @@
 
             <button class="button" type="button" onclick="addProduct()">Add Product</button>
 
+
             <h2>Selected Products:</h2>
             <table id="selectedProductsTable">
                 <thead>
@@ -45,12 +46,10 @@
             <label for="onlinePayment"><input type="radio" name="paymentMethod" value="online" id="onlinePayment" required>Online</label>
             <label for="offlinePayment"><input type="radio" name="paymentMethod" value="offline" id="offlinePayment" required>Offline</label>
 
-            <button type="button" onclick="calculateTotal()">Calculate Total</button>
+           <button type="submit" id="submitButton" onclick="submitForm()">Submit</button>
 
-            {{ form.hidden_tag() }}
-            <div>
-                {{ form.submit(class="blue-button") }}
-            </div>
+
+
         </form>
     </section>
 
@@ -100,10 +99,11 @@
 
             // Add a button to remove the product from the cart
             var removeButton = document.createElement('button');
-            removeButton.innerHTML = 'Remove';
-            removeButton.onclick = function() {
-                removeProduct(newRow);
-            };
+                removeButton.innerHTML = 'Remove';
+                removeButton.type = 'button';  // Add this line
+                removeButton.onclick = function() {
+                    removeProduct(newRow);
+                }
             cellAction.appendChild(removeButton);
 
             // Update the total amount
@@ -146,7 +146,7 @@
             var textareaContent = '';
 
             // Iterate through rows and append data to textarea
-            for (var i = 0; i < selectedProductsTable.rows.length; i++) {
+            for (let i = 0; i < selectedProductsTable.rows.length; i++) {
                 var productName = selectedProductsTable.rows[i].cells[0].innerHTML;
                 var quantity = selectedProductsTable.rows[i].cells[1].innerHTML;
                 var totalPrice = selectedProductsTable.rows[i].cells[2].innerHTML.replace('₹', '');
@@ -162,5 +162,11 @@
         window.onload = function() {
             updateTextarea();
         };
+            function submitForm() {
+        // Validate form data here if needed
+
+        // Submit the form
+        document.getElementById("billingForm").submit();
+    }
     </script>
 {% endblock %}

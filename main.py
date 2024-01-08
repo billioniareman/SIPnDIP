@@ -7,6 +7,7 @@ import xlsxwriter
 app.app_context().push()
 
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
@@ -30,16 +31,15 @@ class InventoryItem(db.Model):
 
 
 class SoldItem(db.Model):
+    __tablename__ = 'Sales'
     id = db.Column(db.Integer, primary_key=True)
-    category_id = db.Column(db.String(50))
     product_name = db.Column(db.String(100))
     quantity = db.Column(db.String(100))
     total_price = db.Column(db.Float)
     method = db.Column(db.String(100))
     date = db.Column(db.Date)
 
-    def __init__(self,category, product_name, quantity, total_price, date, method):
-        self.category=category
+    def __init__(self, product_name, quantity, total_price, date, method):
         self.product_name = product_name
         self.quantity = quantity
         self.total_price = total_price
@@ -140,17 +140,16 @@ def add_stock():
 @app.route('/place_order', methods=['POST', 'GET'])
 @login_required
 def billing():
-    form = BillForm()
     inventory = Menu.query.all()
 
-    if request.method in ['POST', 'GET']:
-        category=request.form.get('category')
+    if request.method == 'POST' or request.method == 'GET':
+        category = request.form.get('category')
         products_selected = request.form.get('selectedProducts')
         rst = soldtableclean.Soldtableclean(products_selected).str_to_list()
         item = soldtableclean.Setdatabase(rst).list_of_item()
         quantity = soldtableclean.Setdatabase(rst).list_of_quantities()
 
-        date = datetime.datetime.now()  # Use datetime.datetime.now() for the current timestamp
+        date = datetime.datetime.now()
         method = request.form.get('paymentMethod')
 
         quantity_str = ','.join(str(q) for q in quantity) if all(quantity) else '0'
@@ -160,19 +159,12 @@ def billing():
             menu_item = Menu.query.filter_by(product_name=i).first()
             if menu_item:
                 total_price += menu_item.product_rate
-
-        # Print information to the console
-        print(f"Selected Items: {', '.join(item)}")
-        print(f"Quantities: {quantity_str}")
-        print(f"Total Price: {total_price}")
-        print(f"Payment Method: {method}")
-
-        if not item:
+        print('category',category)
+        if category is None:
             flash('Add items to proceed')
         else:
             billing_item = SoldItem(
-                category=category,
-                product_name=' '.join(item),
+                product_name=','.join(item),
                 quantity=quantity_str,
                 total_price=total_price,
                 date=date,
@@ -181,13 +173,16 @@ def billing():
             db.session.add(billing_item)
             db.session.commit()
             flash('Order placed successfully!', 'success')  # Flash message added
+            return redirect(url_for('order_confirmation'))  # Redirect to the order confirmation page
 
-        return render_template('billing.html', inventory=inventory, form=form,
+        return render_template('billing.html', inventory=inventory,
                                categories=set(item.product_category for item in inventory))
     else:
-        return redirect(url_for('index'))
+        return redirect('index')
 
-
+@app.route('/order_confirmation')
+def order_confirmation():
+    return render_template('order_confirmation.html')
 @app.route('/get_categories')
 def get_categories():
     menu = Menu.query.all()
@@ -218,11 +213,16 @@ def admin():
             for date in formatted_dates
         ],
     }
-    pie_data = {
-        'labels': ['Category A', 'Category B', 'Category C', 'Category D', 'Category E'],
-        'data': [30, 15, 25, 20, 10],
-    }
+    online_data = SoldItem.query.filter_by(date=today, method='online').with_entities(
+        func.sum(SoldItem.total_price)).scalar() or 0
 
+    cash_data = SoldItem.query.filter_by(date=today, method='offline').with_entities(
+        func.sum(SoldItem.total_price)).scalar() or 0
+
+    pie_data = {
+        'labels': ['Online', 'Cash'],
+        'data': [online_data, cash_data],
+    }
     return render_template('admin.html', chart_data=chart_data, pie_data=pie_data)
 
 
