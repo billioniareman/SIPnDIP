@@ -7,20 +7,38 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="icon" type="image/x-icon" sizes="16x16" href="/static/img/logo.ico">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
-        /* Add CSS styles for chart containers */
+
         .chart-container {
             display: inline-block;
-            width: 400px; /* Adjust the width as needed */
-            margin-right: 20px; /* Adjust the margin as needed */
+            width: 400px;
+            margin-right: 20px;
         }
     </style>
 </head>
 <body>
+ <nav class="navbar">
+        <div class="brand">
+            <a href="/">
+                <img src="/static/img/sipndip.png" alt="Brand Logo">
+            </a>
+            <a href="/">
+                <span>SIPnDIP</span>
+            </a>
+        </div>
+        <div class="buttons">
+            <a href="{{ url_for('billing') }}"><button class="nav-button">Billing</button></a>
+            <a href="{{ url_for('update_menu') }}"><button class="nav-button">Menu</button></a>
+            <a href="{{ url_for('add_stock') }}"><button class="nav-button">Add Inventory</button></a>
+            <a href="{{ url_for('view_inventory') }}"><button class="nav-button">Inventory</button></a>
+            <a href="{{ url_for('logout') }}"><button class="nav-button">Logout</button></a>
+        </div>
+    </nav>
 
 <h1>Admin Dashboard</h1>
 <h2>Today's Revenue</h2>
-<h4>{{ chart_data['today_revenue'] }}</h4>
+<h3>{{ chart_data['today_revenue'] }}</h3>
 <div class="content-container">
     <section class="date-selection-section">
         <form method="GET" action="{{ url_for('download_menu_excel') }}">
@@ -44,7 +62,7 @@
 </div>
 
 <script>
-    // Pie Chart
+
     const pieCtx = document.getElementById('myPieChart').getContext('2d');
     const myPieChart = new Chart(pieCtx, {
         type: 'pie',
@@ -67,8 +85,6 @@
             maintainAspectRatio: false,
         }
     });
-
-    // Bar Chart
     const barCtx = document.getElementById('barChart').getContext('2d');
     const myChart = new Chart(barCtx, {
         type: 'bar',
@@ -77,9 +93,9 @@
             datasets: [{
                 label: 'Sale',
                 data: {{ chart_data.data | tojson | safe }},
-                backgroundColor: 'rgba(210,0,253,0.62)',
+                backgroundColor: 'rgba(169,222,255,0.38)',
                 borderColor: 'rgb(75,94,192)',
-                borderWidth: 1
+                borderWidth: 2
             }]
         },
         options: {

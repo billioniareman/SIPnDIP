@@ -19,9 +19,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="CSS File" />
         <option value="Python Script" />
-        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -77,6 +77,7 @@
     &quot;JavaScript Debug.admin.html.executor&quot;: &quot;Run&quot;,
     &quot;JavaScript Debug.bill.html.executor&quot;: &quot;Run&quot;,
     &quot;JavaScript Debug.htmlpage.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.layout.html.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.soldtableclean.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
@@ -111,6 +112,7 @@
       <recent name="C:\Users\Asus\PycharmProjects\WEBFlask\static\img" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Asus\PycharmProjects\WEBFlask\myapp" />
       <recent name="C:\Users\Asus\PycharmProjects\WEBFlask\static" />
       <recent name="C:\Users\Asus\PycharmProjects\WEBFlask" />
       <recent name="C:\Users\Asus\PycharmProjects\WEBFlask\instance" />
@@ -122,6 +124,9 @@
     </option>
   </component>
   <component name="RunManager" selected="Flask server.WEBFlask">
+    <configuration name="layout.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/WEBFlask/templates/layout.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="WEBFlask" />
       <option name="ENV_FILES" value="" />
@@ -136,7 +141,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Asus\PycharmProjects\WEBFlask\myapp\main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -147,9 +152,8 @@
     </configuration>
     <configuration name="WEBFlask" type="Python.FlaskServer">
       <option name="flaskDebug" value="true" />
-      <option name="flaskEnv" />
       <module name="WEBFlask" />
-      <option name="target" value="C:\Users\Asus\PycharmProjects\WEBFlask\main.py" />
+      <option name="target" value="$PROJECT_DIR$/running.py" />
       <option name="targetType" value="PATH" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -182,10 +186,12 @@
     </configuration>
     <list>
       <item itemvalue="Flask server.WEBFlask" />
+      <item itemvalue="JavaScript Debug.layout.html" />
       <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.layout.html" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
@@ -193,7 +199,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+        <option value="bundled-python-sdk-5a2391486177-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13763.11" />
       </set>
     </attachedChunks>
   </component>
@@ -264,7 +270,22 @@
       <workItem from="1704628515413" duration="190000" />
       <workItem from="1704644112441" duration="48000" />
       <workItem from="1704729214774" duration="3325000" />
-      <workItem from="1704733487212" duration="6481000" />
+      <workItem from="1704733487212" duration="6965000" />
+      <workItem from="1704878525571" duration="1305000" />
+      <workItem from="1704897740457" duration="272000" />
+      <workItem from="1704953820991" duration="1539000" />
+      <workItem from="1704955455678" duration="1013000" />
+      <workItem from="1704981539345" duration="5427000" />
+      <workItem from="1704989830756" duration="219000" />
+      <workItem from="1704990065580" duration="1240000" />
+      <workItem from="1705037781391" duration="169000" />
+      <workItem from="1705042526309" duration="734000" />
+      <workItem from="1705046625463" duration="647000" />
+      <workItem from="1705676533273" duration="5821000" />
+      <workItem from="1706018815424" duration="3240000" />
+      <workItem from="1706377403530" duration="591000" />
+      <workItem from="1707247802025" duration="2520000" />
+      <workItem from="1707285345222" duration="360000" />
     </task>
     <task id="LOCAL-00001" summary="latestupdate">
       <option name="closed" value="true" />
@@ -364,7 +385,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WEBFlask$main.coverage" NAME="main Coverage Results" MODIFIED="1704569553557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/WEBFlask$WEBFlask.coverage" NAME="WEBFlask Coverage Results" MODIFIED="1704739578481" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/WEBFlask$WEBFlask.coverage" NAME="WEBFlask Coverage Results" MODIFIED="1707247997628" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/WEBFlask$migrate.coverage" NAME="migrate Coverage Results" MODIFIED="1698935695241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/WEBFlask$Flask__main_py_.coverage" NAME="Flask (main.py) Coverage Results" MODIFIED="1703261650806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/WEBFlask$soldtableclean.coverage" NAME="soldtableclean Coverage Results" MODIFIED="1704139683015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
