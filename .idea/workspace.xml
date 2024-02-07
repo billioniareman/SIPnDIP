@@ -160,7 +160,7 @@
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="C:\Users\Asus\AppData\Local\Programs\Python\Python311\python.exe" />
       <option name="SDK_NAME" value="Python 3.11" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -285,7 +285,7 @@
       <workItem from="1706018815424" duration="3240000" />
       <workItem from="1706377403530" duration="591000" />
       <workItem from="1707247802025" duration="2520000" />
-      <workItem from="1707285345222" duration="360000" />
+      <workItem from="1707285345222" duration="774000" />
     </task>
     <task id="LOCAL-00001" summary="latestupdate">
       <option name="closed" value="true" />

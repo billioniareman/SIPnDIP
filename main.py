@@ -77,7 +77,7 @@ def login():
         # Validate email address format
         if '@' not in email:
             flash('Invalid email address', 'error')
-            return render_template('login.html', form=form)
+            return render_template('index.html', form=form)
 
         try:
             user = auth.get_user_by_email(email)
@@ -89,12 +89,12 @@ def login():
         except auth.UserNotFoundError:
             flash('User not found', 'error')
 
-    return render_template('login.html', form=form)
+    return render_template('index.html', form=form)
 
 @app.route('/main')
 @login_required
 def index():
-    return render_template('index.html')
+    return render_template('main.html')
 @app.route('/add_stock', methods=['GET', 'POST'])
 @login_required
 def add_stock():
