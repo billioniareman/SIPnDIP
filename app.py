@@ -312,4 +312,6 @@ def download_menu_excel():
     return send_file(excel_file_path, as_attachment=True)
 
 
-
+if __name__ == '__main__':
+    app.run(debug=True)
+    app.app_context().pop()
